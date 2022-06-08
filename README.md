@@ -2,6 +2,7 @@
 
 ## Notebooks
 
+* [Human_DNA_small](Human_DNA_small.ipynb): DeBERTa small model trained over [Human_DNA_v0](https://huggingface.co/datasets/simecek/Human_DNA_v0) dataset (2 epochs)
 * [Training_with_cDNA](Training_with_cDNA.ipynb): Current training script demonstrated on BERT architecture and cDNA dataset
 * [DNA data](DNA_data.ipynb): Reshaping Human genome (DNA) into HF dataset
 * [env_init](env_init.ipynb): Internal script for installation needed on our virtual machines (E-INFRA HUB)

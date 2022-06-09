@@ -7,12 +7,14 @@
 * [DNA data](DNA_data.ipynb): Reshaping Human genome (DNA) into HF dataset
 * [env_init](env_init.ipynb): Internal script for installation needed on our virtual machines (E-INFRA HUB)
 * [Architecture pretraining](architecture_pretraining.ipynb): Script for pretraining various architectures on human DNA
+* [DNA data configurable](DNA_data_configurable.ipynb): Configurable script for downloading, processing, and uploading of DNA data from fasta files to HuggingFace (HF) datasets
 
 ## Datasets
 
 *   [Human_DNA_v0](https://huggingface.co/datasets/simecek/Human_DNA_v0): DNA splitted into 10kb pieces
 *   [Human_DNA_v0_DNABert6tokenized](https://huggingface.co/datasets/simecek/Human_DNA_v0_DNABert6tokenized): DNA tokenized and ready for language model training (tensors of 512 tokens)
 *   [Human_cdna](https://huggingface.co/datasets/Vlasta/human_cdna): `Homo_sapiens.GRCh38.cdna.abinitio.fa.gz` reshaped into HF dataset 
+*   [Other organisms](https://huggingface.co/davidcechak) HF datasets of other organisms can be found here (TODO: break them down here and link one by one)
 
 ## Models
 

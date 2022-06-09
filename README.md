@@ -6,6 +6,7 @@
 * [DNA data](DNA_data.ipynb): Reshaping Human genome (DNA) into HF dataset
 * [DNA data configurable](experiments/organisms/DNA_data_configurable.ipynb): Configurable script for downloading, processing, and uploading of DNA data from fasta files to HuggingFace (HF) datasets
 * [Architecture pretraining](experiments/architectures/architecture_pretraining.ipynb): Script for pretraining various architectures on human DNA
+* [Human_DNA_Deberta](experiments/architectures/Human_DNA_Deberta.ipynb): training (full) Deberta model, too small LR
 * [Training_with_cDNA](Training_with_cDNA.ipynb): Current training script demonstrated on BERT architecture and cDNA dataset, not very useful
 * [env_init](env_init.ipynb): Internal script for installation needed on our virtual machines (E-INFRA HUB)
 
@@ -19,11 +20,11 @@
 
 ## Models
 
-* [DNADebertaSmall](https://huggingface.co/simecek/DNADebertaSmall): currently the best model for Human DNA, pretrained by [Human_DNA_small](Human_DNA_small.ipynb) notebook
+* [DNADebertaSmall](https://huggingface.co/simecek/DNADebertaSmall): currently the best model for Human DNA, pretrained by [Human_DNA_small](Human_DNA_small.ipynb)
 * [DNA_Deberta_1epoch](https://huggingface.co/Vlasta/humandna_deberta_default_empty_stud_8442): Deberta pretrained on Human DNA for 1 epoch
 * [DNA_Bert_1epoch](https://huggingface.co/Vlasta/humandna_bert_default_beautiful_bench_4197): Bert pretrained on Human DNA for 1 epoch
 * [DNA_DistilBert_1epoch](https://huggingface.co/Vlasta/humandna_distillbert_random_systematic_walrus_56): DistilBert pretrained on Human DNA for 1 epoch
-* [Other organisms](https://huggingface.co/simecek): naming scheme {Organism}DNADeberta, DebertaSmall, 25000 steps (~3 epochs of mouse genome)
+* [Other organisms](https://huggingface.co/simecek): naming scheme {Organism}DNADeberta, DebertaSmall, 25_000 steps (~3 epochs of mouse genome)
 * [cDNABERT_v0](https://huggingface.co/simecek/cDNABERT_v0): the output of [Training_with_cDNA](Training_with_cDNA.ipynb) script, not very useful model
 
 ## Tokenizers

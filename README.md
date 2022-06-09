@@ -2,12 +2,13 @@
 
 ## Notebooks
 
-* [Human_DNA_small](Human_DNA_small.ipynb): DeBERTa small model trained over [Human_DNA_v0](https://huggingface.co/datasets/simecek/Human_DNA_v0) dataset (2 epochs)
-* [Training_with_cDNA](Training_with_cDNA.ipynb): Current training script demonstrated on BERT architecture and cDNA dataset
+* [Human_DNA_small](Human_DNA_small.ipynb): DeBERTa small model trained over [Human_DNA_v0](https://huggingface.co/datasets/simecek/Human_DNA_v0) dataset (10 epochs)
 * [DNA data](DNA_data.ipynb): Reshaping Human genome (DNA) into HF dataset
+* [DNA data configurable](experiments/organisms/DNA_data_configurable.ipynb): Configurable script for downloading, processing, and uploading of DNA data from fasta files to HuggingFace (HF) datasets
+* [Architecture pretraining](experiments/architectures/architecture_pretraining.ipynb): Script for pretraining various architectures on human DNA
+* [Training_with_cDNA](Training_with_cDNA.ipynb): Current training script demonstrated on BERT architecture and cDNA dataset, not very useful
 * [env_init](env_init.ipynb): Internal script for installation needed on our virtual machines (E-INFRA HUB)
-* [Architecture pretraining](architecture_pretraining.ipynb): Script for pretraining various architectures on human DNA
-* [DNA data configurable](DNA_data_configurable.ipynb): Configurable script for downloading, processing, and uploading of DNA data from fasta files to HuggingFace (HF) datasets
+
 
 ## Datasets
 

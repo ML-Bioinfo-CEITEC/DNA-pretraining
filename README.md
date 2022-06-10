@@ -24,6 +24,7 @@
 * [DNA_Deberta_1epoch](https://huggingface.co/Vlasta/humandna_deberta_default_empty_stud_8442): Deberta pretrained on Human DNA for 1 epoch
 * [DNA_Bert_1epoch](https://huggingface.co/Vlasta/humandna_bert_default_beautiful_bench_4197): Bert pretrained on Human DNA for 1 epoch
 * [DNA_DistilBert_1epoch](https://huggingface.co/Vlasta/humandna_distillbert_random_systematic_walrus_56): DistilBert pretrained on Human DNA for 1 epoch
+* [DNA_Electra_1epoch](https://huggingface.co/Vlasta/humandna_Electra_random): Electra pretrained on DNA for 1 epoch
 * [Other organisms](https://huggingface.co/simecek): naming scheme {Organism}DNADeberta, DebertaSmall, 25_000 steps (~3 epochs of mouse genome)
 * [cDNABERT_v0](https://huggingface.co/simecek/cDNABERT_v0): the output of [Training_with_cDNA](Training_with_cDNA.ipynb) script, not very useful model
 

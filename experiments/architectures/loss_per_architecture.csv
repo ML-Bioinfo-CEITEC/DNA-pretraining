@@ -1,0 +1,15 @@
+,model,nparams,time,loss
+1,simecek/humandna_MOBILEBERT_1epoch,23.042565,46.7417,6.975131988525391
+12,Vlasta/humandna_DISTILBERT_random,46.667781,29.7474,7.242573261260986
+13,Vlasta/humandna_DEBERTAsmall_random,46.667781,29.7338,7.242573261260986
+9,Vlasta/humandna_distillbert_default_dual_liability_4383,46.667781,29.7496,7.261172771453857
+10,Vlasta/humandna_deberta_default_empty_stud_8442,89.185797,70.4557,7.262007713317871
+8,Vlasta/humandna_bert_default_beautiful_bench_4197,89.196549,56.7453,7.263117790222168
+7,simecek/humandna_DISTILBERT_1epoch,46.667781,29.7373,7.263185977935791
+6,simecek/humandna_DEBERTA_1epoch,89.185797,70.4467,7.263495922088623
+0,simecek/humandna_DEBERTASMALL_1epoch,46.663173,37.0356,7.263691425323486
+5,simecek/humandna_BERT_1epoch,89.196549,56.7397,7.266287326812744
+2,simecek/humandna_ELECTRA_1epoch,10.138373,17.0715,7.315179824829102
+11,Vlasta/humandna_Electra_random,10.138373,17.0886,7.3161139488220215
+3,simecek/humandna_PERCEIVER_1epoch,269.912325,60.1046,7.815895080566406
+4,simecek/humandna_ALBERT_1epoch,203.027973,764.4491,8.014447212219238

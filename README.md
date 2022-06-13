@@ -1,5 +1,15 @@
 # 🤗 Models For Genomic Sequences
 
+## Experiments & plans
+
+* [How much is the language of DNA universal](experiments/organisms/Results_organisms.ipynb): DebertaSmall model is trained on the same size of training set for several organisms and the resulting models are compared. 
+* [What is the  best architecture](experiments/architectures/Results_architectures.ipynb): Several MaskedLM architectures trained on human genome and the results are compared.
+* [Comparison to CNN on genomic benchmarks](): (t.b.d.)
+* [Loss on different types of DNA seqs](): (t.b.d.)
+* Comparison to DNABert (t.b.d.)
+* Experimenting with DNAPerceiver (t.b.d.)
+
+
 ## Notebooks
 
 * [Human_DNA_small](Human_DNA_small.ipynb): DeBERTa small model trained over [Human_DNA_v0](https://huggingface.co/datasets/simecek/Human_DNA_v0) dataset (10 epochs)

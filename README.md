@@ -31,7 +31,7 @@
 
 ## Models
 
-* [DNADebertaSmall2](https://huggingface.co/simecek/DNADebertaSmall2): currently the best model, DebertaSmall, pretrained by on [Human_DNA_v0](https://huggingface.co/datasets/simecek/Human_DNA_v0) for 30 epochs
+* [DNADebertaSmall2](https://huggingface.co/simecek/DNADeberta2): currently the best model, DebertaSmall, pretrained by on [Human_DNA_v0](https://huggingface.co/datasets/simecek/Human_DNA_v0) for 30 epochs
 * [DNADebertaSmall](https://huggingface.co/simecek/DNADebertaSmall): DebertaSmall, pretrained by [Human_DNA_small](Human_DNA_small.ipynb) on [Human_DNA_v0](https://huggingface.co/datasets/simecek/Human_DNA_v0) for 10 epochs
 * [DNAMobileBert](https://huggingface.co/simecek/DNAMobileBert): MobileBERT, pretrained on [Human_DNA_v0](https://huggingface.co/datasets/simecek/Human_DNA_v0) for 10 epochs
 * [Other organisms](https://huggingface.co/simecek): naming scheme {Organism}DNADeberta, DebertaSmall, 25_000 steps (~3 epochs of mouse genome)

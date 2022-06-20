@@ -27,15 +27,15 @@
 *   [Human_DNA_v0_DNABert6tokenized](https://huggingface.co/datasets/simecek/Human_DNA_v0_DNABert6tokenized): DNA tokenized and ready for language model training (tensors of 512 tokens)
 *   [Human_cdna](https://huggingface.co/datasets/Vlasta/human_cdna): `Homo_sapiens.GRCh38.cdna.abinitio.fa.gz` reshaped into HF dataset 
 *   [Other organisms](https://huggingface.co/davidcechak) HF datasets of other organisms can be found here (mouse, fruit fly, roundworm, zebra fish, arabidopsis)
+* [simecek/Human_DNA_v0_Perceiver1tokenized](https://huggingface.co/datasets/simecek/Human_DNA_v0_Perceiver1tokenized): [Human_DNA_v0](https://huggingface.co/datasets/simecek/Human_DNA_v0) tokenized for Perceiver model (1 token = 1 bp)
 
 ## Models
 
-* [DNADebertaSmall](https://huggingface.co/simecek/DNADebertaSmall): currently the best model for Human DNA, pretrained by [Human_DNA_small](Human_DNA_small.ipynb)
-* [DNA_Deberta_1epoch](https://huggingface.co/Vlasta/humandna_deberta_default_empty_stud_8442): Deberta pretrained on Human DNA for 1 epoch
-* [DNA_Bert_1epoch](https://huggingface.co/Vlasta/humandna_bert_default_beautiful_bench_4197): Bert pretrained on Human DNA for 1 epoch
-* [DNA_DistilBert_1epoch](https://huggingface.co/Vlasta/humandna_distillbert_random_systematic_walrus_56): DistilBert pretrained on Human DNA for 1 epoch
-* [DNA_Electra_1epoch](https://huggingface.co/Vlasta/humandna_Electra_random): Electra pretrained on DNA for 1 epoch
+* [DNADebertaSmall2](https://huggingface.co/simecek/DNADebertaSmall2): currently the best model, DebertaSmall, pretrained by on [Human_DNA_v0](https://huggingface.co/datasets/simecek/Human_DNA_v0) for 30 epochs
+* [DNADebertaSmall](https://huggingface.co/simecek/DNADebertaSmall): DebertaSmall, pretrained by [Human_DNA_small](Human_DNA_small.ipynb) on [Human_DNA_v0](https://huggingface.co/datasets/simecek/Human_DNA_v0) for 10 epochs
+* [DNAMobileBert](https://huggingface.co/simecek/DNAMobileBert): MobileBERT, pretrained on [Human_DNA_v0](https://huggingface.co/datasets/simecek/Human_DNA_v0) for 10 epochs
 * [Other organisms](https://huggingface.co/simecek): naming scheme {Organism}DNADeberta, DebertaSmall, 25_000 steps (~3 epochs of mouse genome)
+* [Other architectures](https://huggingface.co/simecek): naming scheme humandna_{architecture}_1epoch
 * [cDNABERT_v0](https://huggingface.co/simecek/cDNABERT_v0): the output of [Training_with_cDNA](Training_with_cDNA.ipynb) script, not very useful model
 
 ## Tokenizers

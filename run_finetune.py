@@ -18,7 +18,7 @@ import os
 ## INFO
 #######
 # cca 00:06:11 na jednu epochu (2/3x eval a 1/2x save)
-# prave testuju 
+# 
 
     
     
@@ -38,6 +38,7 @@ genomic_datasets = list_datasets()
 genomic_datasets.sort()
 # skipping multiclass dataset for now
 genomic_datasets.remove("human_ocr_ensembl")
+genomic_datasets.remove("dummy_mouse_enhancers_ensembl")
 print(genomic_datasets)
 
 #         config:
@@ -56,5 +57,6 @@ for dataset_name in genomic_datasets:
         
         log_extra(model_name, dataset_name, f1_test, acc_test)
         
+# TODO output csv file with results
 
 print('ALL DONE')

@@ -1,5 +1,5 @@
 import os
-import comet_ml
+# import comet_ml
 import torch 
 import datasets 
 import numpy as np
@@ -8,7 +8,6 @@ from pathlib import Path
 from datasets import Dataset, DatasetDict, load_metric
 from huggingface_hub import notebook_login
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, DataCollatorWithPadding, TrainingArguments, Trainer, EarlyStoppingCallback
-from genomic_benchmarks.dataset_getters.pytorch_datasets import HumanNontataPromoters
 from genomic_benchmarks.loc2seq import download_dataset
 from genomic_benchmarks.data_check import list_datasets, is_downloaded
 
@@ -40,13 +39,13 @@ def fine_tune(hug_model_link, dataset_name, epochs, POSITIVE_CLASS_INDEX, NUM_OF
 
     train_valid_split = df.query("dset == 'train'").shape[0] // 100 * 80
 
-    # train_df = df[df['dset']=='train'].iloc[:train_valid_split,:]
-    # valid_df = df[df['dset']=='train'].iloc[train_valid_split:,:]
-    # test_df = df[df['dset']=='test']
+    train_df = df[df['dset']=='train'].iloc[:train_valid_split,:]
+    valid_df = df[df['dset']=='train'].iloc[train_valid_split:,:]
+    test_df = df[df['dset']=='test']
     # TODO smaller for debug
-    train_df = df[df['dset']=='train'].iloc[:64,:]
-    valid_df = df[df['dset']=='train'].iloc[64:128,:]
-    test_df = df[df['dset']=='test'].iloc[0:64,:]
+    # train_df = df[df['dset']=='train'].iloc[:64,:]
+    # valid_df = df[df['dset']=='train'].iloc[64:128,:]
+    # test_df = df[df['dset']=='test'].iloc[0:64,:]
 
     datasets = [train_df, valid_df, test_df]
     datasets = [Dataset.from_pandas(x) for x in datasets]
@@ -109,4 +108,4 @@ def fine_tune(hug_model_link, dataset_name, epochs, POSITIVE_CLASS_INDEX, NUM_OF
     metric = load_metric("accuracy")
     test_acc = metric.compute(predictions = np.argmax(predictions.predictions, axis=-1), references = dds['test']['labels'])
 
-    return test_f1, test_acc
+    return test_f1["f1"], test_acc["accuracy"]

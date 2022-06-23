@@ -1,5 +1,7 @@
 import comet_ml
 
+
+# TODO investigate the "COMET ERROR: Unknown exception happened in Experiment.log_metric; ignoring"
 def log_extra(model_name, dataset_name, f1_test, acc_test):
     current_experiment = comet_ml.get_global_experiment()#
     afterlog_experiment = comet_ml.ExistingExperiment(previous_experiment=current_experiment.get_key())

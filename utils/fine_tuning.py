@@ -24,12 +24,17 @@ from transformers import TrainingArguments, Trainer, EarlyStoppingCallback
 from genomic_benchmarks.data_check import list_datasets
 
 # todo change-able tokenizer/-ing
+# todo support multiclass datasets
 
 def fine_tune(hug_model_link, model_name, dataset_name, epochs):
+    # config
+    POSITIVE_CLASS_INDEX = 1
     
     print(torch.cuda.get_device_name(0))
 
-    download_dataset(dataset_name, version=0)
+#     TODO seems like genomic benchmarks have a forced download of dataset by default
+    download_dataset(dataset_name, version=0, force_download = False)
+    print(dataset_name)
 
     tokenizer = AutoTokenizer.from_pretrained("armheb/DNA_bert_6")
 
@@ -39,12 +44,16 @@ def fine_tune(hug_model_link, model_name, dataset_name, epochs):
     tmp_dict = {}
 
     for dset in ['train', 'test']:
-        for c in ['negative', 'positive']:
-            for f in Path(f'../.genomic_benchmarks/{dataset_name}/{dset}/{c}/').glob('*.txt'):
+        list_dir = os.listdir(Path(f'/home/jovyan/.genomic_benchmarks/{dataset_name}/{dset}/'))
+        for c in list_dir:
+            for f in Path(f'/home/jovyan/.genomic_benchmarks/{dataset_name}/{dset}/{c}/').glob('*.txt'):
                 txt = f.read_text()
-                tmp_dict[f.stem] = (dset, int(c == "positive"), txt)
+                # f.stem + c            
+                # temporal solution to fix the problem with repeated indexes in positive and negative class (index X can be found in both classes, for each index X)
+                tmp_dict[f.stem + c] = (dset, int(c == list_dir[POSITIVE_CLASS_INDEX]), txt)
 
     df = pd.DataFrame.from_dict(tmp_dict).T.rename(columns = {0: "dset", 1: "cat", 2: "seq"})
+    print(df)
 
     train_valid_split = df.query("dset == 'train'").shape[0] // 100 * 80
     print(df.query("dset == 'train'").shape[0], train_valid_split)
@@ -80,14 +89,19 @@ def fine_tune(hug_model_link, model_name, dataset_name, epochs):
         evaluation_strategy="steps",    # evaluate each `logging_steps` steps
         overwrite_output_dir=True,      
         num_train_epochs=epochs,            # number of training epochs, feel free to tweak
-        per_device_train_batch_size=32, # the training batch size, put it as high as your GPU memory fits
-        gradient_accumulation_steps=2,  # accumulating the gradients before updating the weights
-        per_device_eval_batch_size=32,  # evaluation batch size
-        logging_steps=20,             # evaluate, log and save model checkpoints every 1000 step
-        save_steps=200,
+        per_device_train_batch_size=64, # the training batch size, put it as high as your GPU memory fits
+        # gradient_accumulation_steps=1,  # accumulating the gradients before updating the weights
+        per_device_eval_batch_size=64,    # evaluation batch size
+        logging_steps=400,             # evaluate, log and save model checkpoints every 1000 step
+#         TODO turned off for faster develop
+
+        # save_steps=800,
         fp16=True,
-        load_best_model_at_end=True,  # whether to load the best model (in terms of loss) at the end of training
-        save_total_limit=3,           # whether you don't have much space so you let only 5 model weights saved in the disk
+        
+#         TODO turned off for faster develop
+        
+        # load_best_model_at_end=True,  # whether to load the best model (in terms of loss) at the end of training
+        # save_total_limit=3,           # whether you don't have much space so you let only 5 model weights saved in the disk
     # There was an error with some recursion call for push_to_hub == True
         push_to_hub=False,
         # hub_model_id="DNADeberta_fine",
@@ -109,18 +123,21 @@ def fine_tune(hug_model_link, model_name, dataset_name, epochs):
         tokenizer=tokenizer, 
         compute_metrics=compute_metrics,
     #     early_stopping_patience - considers evaluation calls (for us, steps at the moment)
-        callbacks=[EarlyStoppingCallback(early_stopping_patience = 5, early_stopping_threshold = 0.02)],
+        callbacks=[EarlyStoppingCallback(early_stopping_patience = 3, early_stopping_threshold = 0.02)],
     )
 
     trainer.train()
     model.push_to_hub(model_name + dataset_name)
+    
+    predictions = trainer.predict(dds['test'])
+    print(predictions.metrics)
 
     metric = load_metric("f1", "accuracy")
     test_f1 = metric.compute(predictions = np.argmax(predictions.predictions, axis=-1), references = dds['test']['labels'])
-    print(test_f1)
+    print('test_f1', test_f1)
 
     metric = load_metric("accuracy", "f1")
     test_acc = metric.compute(predictions = np.argmax(predictions.predictions, axis=-1), references = dds['test']['labels'])
-    print(test_acc)
+    print('test_acc', test_acc)
 
     return test_f1, test_acc

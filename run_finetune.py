@@ -6,9 +6,15 @@ import numpy as np
 from math import sqrt
 from statistics import stdev, fmean
 from genomic_benchmarks.data_check import list_datasets
-from utils.log_utils import log_extra 
 from utils.fine_tuning import fine_tune
 
+###       
+# config:
+###
+hug_model_link = "simecek/DNADeberta"
+epochs = 1
+dataset_iterations = 2
+###
 
 # logging
 csv_rows=[]
@@ -22,17 +28,8 @@ genomic_datasets.sort()
 # skipping dataset with sample length longer then 512 chars, for now
 genomic_datasets.remove("human_ocr_ensembl")
 genomic_datasets.remove("dummy_mouse_enhancers_ensembl")
-# TODO remove for debug
-# genomic_datasets.remove("demo_coding_vs_intergenomic_seqs")
-# genomic_datasets.remove("demo_human_or_worm")
-# genomic_datasets.remove("human_enhancers_cohn")
-# genomic_datasets.remove("human_enhancers_ensembl")
 print(genomic_datasets)
 
-#         config:
-hug_model_link = "simecek/DNADeberta"
-epochs = 1
-dataset_iterations = 2
 
 # skip comet for now
 # comet_key = 'comet_key'

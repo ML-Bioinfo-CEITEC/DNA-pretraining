@@ -52,12 +52,12 @@ for dataset_name in genomic_datasets:
 
 # compute and log metrics
 if(dataset_iterations > 1):
-    stand_devs_header = ["Dataset", "F1 mean", "F1 SEM", "Acc mean", "Acc SEM"]
-    stand_devs = []
+    stats_header = ["Dataset", "F1 mean", "F1 SEM", "Acc mean", "Acc SEM"]
+    stats = []
     for dataset_index in range(len(genomic_datasets)):
         f_scores = [csv_rows[i][1] for i in range(dataset_iterations)]
         acc_scores = [csv_rows[i][2] for i in range(dataset_iterations)]
-        stand_devs.append([
+        stats.append([
             genomic_datasets[dataset_index], 
             fmean(f_scores), stdev(f_scores)/sqrt(len(f_scores)), 
             fmean(acc_scores), stdev(acc_scores)/sqrt(len(acc_scores)),
@@ -73,8 +73,8 @@ with open(file_name, 'a+') as f:
     print("open")
     write = csv.writer(f)  
     if(dataset_iterations > 1):
-        write.writerow(stand_devs_header)
-        write.writerows(stand_devs)
+        write.writerow(stats_header)
+        write.writerows(stats)
     write.writerow(fields)
     write.writerows(csv_rows)
     write.writerow([hug_model_link, exp_start, exp_end])

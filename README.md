@@ -10,7 +10,8 @@
 * DataCollator and optimal masking percentage (t.b.d.)
 * [Other tokenizers](): like BPE... (t.b.d.)
 * Comparison to DNABert (t.b.d.)
-* Experimenting with DNAPerceiver (t.b.d.)
+* Training more with parts of the genome that is harder to predict
+* Experimenting with DNAPerceiver, RoBERTa (t.b.d.)
 
 
 ## Notebooks

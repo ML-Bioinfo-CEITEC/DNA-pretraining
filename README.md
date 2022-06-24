@@ -5,7 +5,7 @@
 * [How much is the language of DNA universal](experiments/organisms/Results_organisms.ipynb): DebertaSmall model is trained on the same size of training set for several organisms and the resulting models are compared. 
 * [What is the  best architecture](experiments/architectures/Results_architectures.ipynb): Several MaskedLM architectures trained on human genome and the results are compared.
 * [Loss on different types of DNA seqs](experiments/low_complexity_seq_loss/): LM works better on low-complexity sequences
-* [Optimal K-mer and stride](experiments/kmer_tokenization/): comparison of K-mer tokemizers on one downstream task (prediction of human promotors), K is from 3 to 6, stride is either 1 or K
+* [Optimal K-mer and stride](experiments/kmer_tokenization/): comparison of K-mer tokemizers on one downstream task (prediction of human promotors), K is from 3 to 9, stride is either 1 or K
 * [Comparison to CNN on genomic benchmarks](): (t.b.d.)
 * Comparison to DNABert (t.b.d.)
 * Experimenting with DNAPerceiver (t.b.d.)
@@ -15,6 +15,7 @@
 
 * [Human_DNA_small](models/Human_DNA_small.ipynb): DeBERTa small model trained over [Human_DNA_v0](https://huggingface.co/datasets/simecek/Human_DNA_v0) dataset (10 epochs)
 * [DNA data](data/DNA_data.ipynb): Reshaping Human genome (DNA) into HF dataset, there is also [a version with stride 1](data/DNA_data2.ipynb)
+* [Custom tokenizer](experiments/kmer_tokenization/Custom_Tokenizer.ipynb): finding a way to create KMER tokenizer for K>6 
 * [DNA data configurable](experiments/organisms/DNA_data_configurable.ipynb): Configurable script for downloading, processing, and uploading of DNA data from fasta files to HuggingFace (HF) datasets
 * [Architecture pretraining](experiments/architectures/architecture_pretraining.ipynb): Script for pretraining various architectures on human DNA
 * [Human_DNA_Deberta](experiments/architectures/Human_DNA_Deberta.ipynb): training (full) Deberta model, too small LR

@@ -57,13 +57,18 @@ if(dataset_iterations > 1):
     stats_header = ["Dataset", "F1 mean", "F1 SEM", "Acc mean", "Acc SEM"]
     stats = []
     for dataset_index in range(len(genomic_datasets)):
-        f_scores = [csv_rows[dataset_index + i][1] for i in range(dataset_iterations)]
-        acc_scores = [csv_rows[dataset_index + i][2] for i in range(dataset_iterations)]
+        f_scores = []
+        acc_scores = []
+        for i in range(dataset_iterations):
+            row_index = dataset_index * dataset_iterations + i
+            f_scores.append(csv_rows[row_index][1])
+            acc_scores.append(csv_rows[row_index][2])
         stats.append([
             genomic_datasets[dataset_index], 
             fmean(f_scores), stdev(f_scores)/sqrt(len(f_scores)), 
             fmean(acc_scores), stdev(acc_scores)/sqrt(len(acc_scores)),
         ])
+
 
 fields = ['Dataset', 'F1', 'Acc'] 
 slash_index = hug_model_link.index("/")

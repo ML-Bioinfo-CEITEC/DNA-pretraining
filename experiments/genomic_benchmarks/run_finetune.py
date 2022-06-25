@@ -14,8 +14,8 @@ from utils.fine_tuning import fine_tune
 # config:
 ###
 hug_model_link = "simecek/DNADeberta"
-epochs = 1
-dataset_iterations = 2
+epochs = 6
+dataset_iterations = 5
 ###
 
 # logging
@@ -57,8 +57,8 @@ if(dataset_iterations > 1):
     stats_header = ["Dataset", "F1 mean", "F1 SEM", "Acc mean", "Acc SEM"]
     stats = []
     for dataset_index in range(len(genomic_datasets)):
-        f_scores = [csv_rows[i][1] for i in range(dataset_iterations)]
-        acc_scores = [csv_rows[i][2] for i in range(dataset_iterations)]
+        f_scores = [csv_rows[dataset_index + i][1] for i in range(dataset_iterations)]
+        acc_scores = [csv_rows[dataset_index + i][2] for i in range(dataset_iterations)]
         stats.append([
             genomic_datasets[dataset_index], 
             fmean(f_scores), stdev(f_scores)/sqrt(len(f_scores)), 

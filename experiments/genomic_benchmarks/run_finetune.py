@@ -6,7 +6,7 @@ import numpy as np
 from math import sqrt
 from statistics import stdev, fmean
 from genomic_benchmarks.data_check import list_datasets
-from utils.fine_tuning import fine_tune
+from utils.finetuning import fine_tune
 
 # TODO omezit/snizit desatinou přesnost na F1 a acc
 

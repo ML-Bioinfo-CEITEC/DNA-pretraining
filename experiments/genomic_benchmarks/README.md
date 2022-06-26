@@ -1,7 +1,7 @@
 # Results
 
-## simecek/DNADeberta
-(preliminary results; more iterations running right now - after a bug fix)
+## simecek/DNADeberta, 6 epochs, 2 dataset iterations
+(preliminary results; more iterations running right now - after a bug fix; SD and SEM will be added after that)
 
 | Dataset | F1 | Acc |
 |----------|-------------:|------:|

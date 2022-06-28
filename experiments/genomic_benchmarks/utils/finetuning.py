@@ -10,7 +10,6 @@ from huggingface_hub import notebook_login
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, DataCollatorWithPadding, TrainingArguments, Trainer, EarlyStoppingCallback
 from genomic_benchmarks.loc2seq import download_dataset
 from genomic_benchmarks.data_check import list_datasets, is_downloaded
-from utils.preprocessing import get_preprocessed_datasets
 from transformers import set_seed, logging
 
 def finetune(hug_model_link, dataset_name, epochs, POSITIVE_CLASS_INDEX, NUM_OF_LABELS, seed):

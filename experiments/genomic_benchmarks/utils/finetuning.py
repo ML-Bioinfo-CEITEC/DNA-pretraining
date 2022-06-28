@@ -10,18 +10,26 @@ from huggingface_hub import notebook_login
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, DataCollatorWithPadding, TrainingArguments, Trainer, EarlyStoppingCallback
 from genomic_benchmarks.loc2seq import download_dataset
 from genomic_benchmarks.data_check import list_datasets, is_downloaded
+from utils.preprocessing import get_preprocessed_datasets
+from transformers import set_seed, logging
 
-# todo change-able stride
-# todo support multiclass datasets
-
-def fine_tune(hug_model_link, dataset_name, epochs, POSITIVE_CLASS_INDEX, NUM_OF_LABELS):
+def finetune(hug_model_link, dataset_name, epochs, POSITIVE_CLASS_INDEX, NUM_OF_LABELS, seed):
+    logging.set_verbosity_error()
+    set_seed(seed) 
+    
     print(torch.cuda.get_device_name(0))
     print(dataset_name)
+    
+    tokenizer = AutoTokenizer.from_pretrained("armheb/DNA_bert_6")
+    model = AutoModelForSequenceClassification.from_pretrained(hug_model_link, num_labels=NUM_OF_LABELS)
+    model.to('cuda')
+    
+            
+    """## 0) Get dataset"""
+    
     if not is_downloaded(dataset_name):
         print("downloading dataset")
         download_dataset(dataset_name, version=0, force_download = False, use_cloud_cache = False)
-
-    tokenizer = AutoTokenizer.from_pretrained("armheb/DNA_bert_6")
 
     def kmers(s, k=6):
         return [s[i:i + k] for i in range(0, len(s), k) if i + k <= len(s)]
@@ -36,19 +44,11 @@ def fine_tune(hug_model_link, dataset_name, epochs, POSITIVE_CLASS_INDEX, NUM_OF
                 tmp_dict[f.stem + c] = (dset, int(c == list_dir[POSITIVE_CLASS_INDEX]), txt)
 
     df = pd.DataFrame.from_dict(tmp_dict).T.rename(columns = {0: "dset", 1: "cat", 2: "seq"})
-    # df.summary()
 
-    train_valid_split = df.query("dset == 'train'").shape[0] // 100 * 80
-
-    train_df = df[df['dset']=='train'].iloc[:train_valid_split,:]
-    valid_df = df[df['dset']=='train'].iloc[train_valid_split:,:]
+    train_valid_index = df.query("dset == 'train'").shape[0] // 100 * 80
+    train_df = df[df['dset']=='train'].iloc[:train_valid_index,:]
+    valid_df = df[df['dset']=='train'].iloc[train_valid_index:,:]
     test_df = df[df['dset']=='test']
-    # TODO smaller for debug
-    # train_df = df[df['dset']=='train'].iloc[:64,:]
-    # valid_df = df[df['dset']=='train'].iloc[64:128,:]
-    # test_df = df[df['dset']=='test'].iloc[0:64,:]
-    
-#     train_df.summary()
 
     datasets = [train_df, valid_df, test_df]
     datasets = [Dataset.from_pandas(x) for x in datasets]
@@ -61,21 +61,22 @@ def fine_tune(hug_model_link, dataset_name, epochs, POSITIVE_CLASS_INDEX, NUM_OF
         'validation': datasets[1],
         'test':  datasets[2],
     })
-    # dds CHECK
 
     """## 1) Fine-tuning"""
-
-    model = AutoModelForSequenceClassification.from_pretrained(hug_model_link, num_labels=NUM_OF_LABELS)
-
+    
+#     see https://huggingface.co/microsoft/deberta-v3-xsmall
     training_args = TrainingArguments(
-        output_dir='./model'
+        output_dir='./model',
         num_train_epochs=epochs,
         per_device_train_batch_size=64, 
-        per_device_eval_batch_size=64,   
+        per_device_eval_batch_size=64,    
         fp16=True,
         evaluation_strategy='epoch',
         logging_strategy='epoch',
-        # learning_rate= zmenšit -- deberta finetuning default
+        save_strategy="no",
+        warmup_steps= 1000, 
+#         1.5e-5,2e-5,3e-5,4e-5
+        learning_rate= 2e-5,
     )
 
     def compute_metrics(eval_preds):
@@ -88,23 +89,17 @@ def fine_tune(hug_model_link, dataset_name, epochs, POSITIVE_CLASS_INDEX, NUM_OF
     trainer = Trainer(
         model=model,
         args=training_args,
-        train_dataset=dds['train'],
-        eval_dataset=dds['validation'],
+        train_dataset = dds['train'], 
+        eval_dataset = dds['validation'],
         tokenizer=tokenizer, 
         compute_metrics=compute_metrics,
-    #     early_stopping_patience - considers evaluation calls (for us, steps at the moment)
+    #     early_stopping_patience - considers evaluation calls (steps/epochs)
         # callbacks=[EarlyStoppingCallback(early_stopping_patience = 3, early_stopping_threshold = 0.02)],
     )
 
     trainer.train()
     
     predictions = trainer.predict(dds['test'])
-    # print(predictions.metrics)
+    print(predictions.metrics)
 
-    metric = load_metric("f1")
-    test_f1 = metric.compute(predictions = np.argmax(predictions.predictions, axis=-1), references = dds['test']['labels'])
-
-    metric = load_metric("accuracy")
-    test_acc = metric.compute(predictions = np.argmax(predictions.predictions, axis=-1), references = dds['test']['labels'])
-
-    return test_f1["f1"], test_acc["accuracy"]
+    return predictions.metrics["test_accuracy"], predictions.metrics["test_f1"]

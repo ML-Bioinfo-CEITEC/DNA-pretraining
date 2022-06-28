@@ -1,56 +1,72 @@
-# import comet_ml
+import comet_ml
 import os
 import csv
 import datetime
+import torch
 import numpy as np
 from math import sqrt
 from statistics import stdev, fmean
 from genomic_benchmarks.data_check import list_datasets
-from utils.finetuning import fine_tune
+from utils.finetuning import finetune
+from utils.log_utils import log_extra
+from numpy.random import randint
 
+# TODO change-able stride
 # TODO omezit/snizit desatinou přesnost na F1 a acc
 
 ###       
 # config:
 ###
 hug_model_link = "simecek/DNADeberta"
-epochs = 6
-dataset_iterations = 5
+epochs = 5
+dataset_iterations = 2
 ###
 
 # logging
 csv_rows=[]
+slash_index = hug_model_link.index("/")
+file_name = hug_model_link[:slash_index] + '_' + hug_model_link[slash_index+1:]
 exp_start = "{:%Y-%b-%d_%H:%M:%S}".format(datetime.datetime.now())
+
 
 genomic_datasets = list_datasets()
 # list_datasets() is not deterministic (resets on lib load)
 genomic_datasets.sort()
-# skipping multiclass dataset for now
-# genomic_datasets.remove("human_ensembl_regulatory")
 # skipping dataset with sample length longer then 512 chars, for now
-genomic_datasets.remove("human_ocr_ensembl")
 genomic_datasets.remove("dummy_mouse_enhancers_ensembl")
-print(genomic_datasets)
 
 
-# skip comet for now
-# comet_key = 'comet_key'
-# os.environ['COMET_API_KEY'] = comet_key
+comet_key = 'EpKIINrla6U4B4LJhd9Sv4i0b'
+os.environ['COMET_API_KEY'] = comet_key
+comet_ml.init(project_name="DNA_finetuning", api_key=comet_key)
 
+def debug_export(to_print):
+    with open('debug.csv', 'a+') as f:
+        print("open")
+        write = csv.writer(f)
+        write.writerow(to_print)
+
+# set seeds for the iterations
+np.random.seed()
+seed_numbers=randint(0, 99999, size=dataset_iterations*len(genomic_datasets))
+print(seed_numbers)
+        
 for dataset_name in genomic_datasets:
     if(dataset_name == 'human_ensembl_regulatory'):
+        # TODO what is possitive class for human_ensembl_regulatory (for F1 score)
         NUM_OF_LABELS = 3
-#         TODO what is possitive class for human_ensembl_regulatory (for F1 score)
     else:
         NUM_OF_LABELS = 2
     POSITIVE_CLASS_INDEX = 1
     
-    for _ in range(dataset_iterations):
-        # comet_ml.init(project_name="DNA_finetuning", api_key=comet_key)
-        f1_test, acc_test = fine_tune(hug_model_link, dataset_name, epochs, POSITIVE_CLASS_INDEX, NUM_OF_LABELS)
+    for i in range(dataset_iterations):
+        seed = seed_numbers[genomic_datasets.index(dataset_name) * dataset_iterations + i]
+        f1_test, acc_test = finetune(hug_model_link, dataset_name, epochs, POSITIVE_CLASS_INDEX, NUM_OF_LABELS, seed)
         
-        csv_rows.append([dataset_name, f1_test, acc_test])
-        # log_extra(hug_model_link, dataset_name, f1_test, acc_test)       
+        debug_export(to_print = [dataset_name, f1_test, acc_test, seed])
+        csv_rows.append([dataset_name, f1_test, acc_test, seed])
+        log_extra(file_name, dataset_name, f1_test, acc_test)      
+        torch.cuda.empty_cache()
 
 # compute and log metrics
 if(dataset_iterations > 1):
@@ -70,13 +86,10 @@ if(dataset_iterations > 1):
         ])
 
 
-fields = ['Dataset', 'F1', 'Acc'] 
-slash_index = hug_model_link.index("/")
-file_name = hug_model_link[:slash_index] + '_' + hug_model_link[slash_index+1:] + '.csv'
-
+fields = ['Dataset', 'F1', 'Acc', 'seed'] 
 exp_end = "{:%Y-%b-%d_%H:%M:%S}".format(datetime.datetime.now())
 
-with open(file_name, 'a+') as f:
+with open(file_name + '.csv', 'a+') as f:
     print("open")
     write = csv.writer(f)  
     if(dataset_iterations > 1):
@@ -85,5 +98,7 @@ with open(file_name, 'a+') as f:
     write.writerow(fields)
     write.writerows(csv_rows)
     write.writerow([hug_model_link, exp_start, exp_end])
+    
+print(csv_rows)
     
 print('ALL DONE') 

@@ -1,0 +1,8 @@
+dataset,accuracy,f1,train_runtime
+demo_coding_vs_intergenomic_seqs,0.5,0.0,2394.4881
+demo_human_or_worm,0.5,0.0,2433.355
+human_enhancers_cohn,0.7092688543465746,0.728243877019281,856.4418
+human_enhancers_ensembl,0.789409105586051,0.7839682013911891,3157.1434
+human_ensembl_regulatory,0.37041914300071044,,5621.5925
+human_nontata_promoters,0.7649988930706221,0.7892803970223324,927.123
+human_ocr_ensembl,0.5,0.0,3662.0521

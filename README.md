@@ -7,7 +7,8 @@
 * [Loss on different types of DNA seqs](experiments/low_complexity_seq_loss/): LM works better on low-complexity sequences
 * [Optimal K-mer and stride](experiments/kmer_tokenization/): comparison of K-mer tokemizers on one downstream task (prediction of human promotors), K is from 3 to 9, stride is either 1 or K
 * [Comparison on genomic benchmarks](experiments/genomic_benchmarks/): this script examined the chosen model over a set of [genomic benchmarks](https://github.com/ML-Bioinfo-CEITEC/genomic_benchmarks) and report metrics
-* DataCollator and optimal masking percentage (t.b.d.)
+* [Custom DataCollator](experiments/custom_masking/): for stride 1, each individual mask token can be predicted from its neighbors, so the token must be masked in blocks 
+* [Search for hyperparameters](experiments/hyperparam_opt/): experimenting with training parameters 
 * [Other tokenizers](): like BPE... (t.b.d.)
 * Comparison to DNABert (t.b.d.)
 * Training more with parts of the genome that is harder to predict
@@ -30,7 +31,7 @@
 
 *   [Human_DNA_v0](https://huggingface.co/datasets/simecek/Human_DNA_v0): DNA splitted into 10kb pieces
 *   [Human_DNA_v0_DNABert6tokenized](https://huggingface.co/datasets/simecek/Human_DNA_v0_DNABert6tokenized): DNA tokenized and ready for language model training (tensors of 512 tokens)
-*   [simecek/Human_DNA_v0_DNABert6tokenized_stride1](https://huggingface.co/datasets/simecek/Human_DNA_v0_DNABert6tokenized_stride1): same as [Human_DNA_v0_DNABert6tokenized](https://huggingface.co/datasets/simecek/Human_DNA_v0_DNABert6tokenized) but stride 1 instead of 6
+*   [simecek/Human_DNA_v0_DNABert6tokenized_stride1](https://huggingface.co/datasets/simecek/Human_DNA_v0_DNABert6tokenized_stride1): same as [Human_DNA_v0_DNABert6tokenized](https://huggingface.co/datasets/simecek/Human_DNA_v0_DNABert6tokenized) but stride 1 instead of 6, also the versions [simecek/Human_DNA_v0_K7tokenized_stride1](https://huggingface.co/datasets/simecek/Human_DNA_v0_K7tokenized_stride1) and [simecek/Human_DNA_v0_K8tokenized_stride1](https://huggingface.co/datasets/simecek/Human_DNA_v0_K8tokenized_stride1) for K equals 7 and 8, respectively
 *   [Human_cdna](https://huggingface.co/datasets/Vlasta/human_cdna): `Homo_sapiens.GRCh38.cdna.abinitio.fa.gz` reshaped into HF dataset 
 *   [Other organisms](https://huggingface.co/davidcechak) HF datasets of other organisms can be found here (mouse, fruit fly, roundworm, zebra fish, arabidopsis)
 * [simecek/Human_DNA_v0_Perceiver1tokenized](https://huggingface.co/datasets/simecek/Human_DNA_v0_Perceiver1tokenized): [Human_DNA_v0](https://huggingface.co/datasets/simecek/Human_DNA_v0) tokenized for Perceiver model (1 token = 1 bp)

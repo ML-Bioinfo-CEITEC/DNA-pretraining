@@ -48,6 +48,7 @@
 ## Tokenizers
 
 * [DNA_bert_6](https://huggingface.co/armheb/DNA_bert_6): we are currently using this tokenize (the sequence needs to be preprocessed before using it)
+* for KMER tokenizer, K equals 7 and 8 (stride 1), we currently use [DNA_bert_6](https://huggingface.co/armheb/DNA_bert_6) with added token 
 
 ## Other(s)
 

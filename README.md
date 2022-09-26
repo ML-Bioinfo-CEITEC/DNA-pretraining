@@ -1,5 +1,7 @@
 # 🤗 Models For Genomic Sequences
 
+TODO: table of datasets and models (by organism) on HF (optionally also link to the notebooks)
+
 ## Experiments & plans
 
 * [How much is the language of DNA universal](experiments/organisms/Results_organisms.ipynb): DebertaSmall model is trained on the same size of training set for several organisms and the resulting models are compared. 

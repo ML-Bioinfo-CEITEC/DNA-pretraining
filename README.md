@@ -1,6 +1,16 @@
 # 🤗 Models For Genomic Sequences
 
-TODO: table of datasets and models (by organism) on HF (optionally also link to the notebooks)
+| Organism | Tokenized dataset | Language model |
+|---|---|---|
+| Homo sapiens  | [Human_DNA_v0_DNABert6tokenized_stride1](https://huggingface.co/datasets/simecek/Human_DNA_v0_DNABert6tokenized_stride1) | [DNADebertaK6b](https://huggingface.co/simecek/DNADebertaK6b)  |
+| Mus musculus  | [Mouse_DNA_v0_tokenized_kmer6_stride1](https://huggingface.co/datasets/roa7n/Mouse_DNA_v0_tokenized_kmer6_stride1)  | [DNADebertaK6_Mouse](https://huggingface.co/roa7n/DNADebertaK6_Mouse)  |
+| Danio rerio  |  [Zebrafish_DNA_v0_tokenized_kmer6_stride1](https://huggingface.co/datasets/simecek/Zebrafish_DNA_v0_tokenized_kmer6_stride1)  | [DNADebertaK6_Zebrafish](https://huggingface.co/simecek/DNADebertaK6_Zebrafish)  |
+| Drosophila melanogaster  |  [Worm_DNA_v0_tokenized_kmer6_stride1](https://huggingface.co/datasets/simecek/Worm_DNA_v0_tokenized_kmer6_stride1)  | [DNADebertaK6_Fruitfly](https://huggingface.co/simecek/DNADebertaK6_Fruitfly)  |
+| C' elegans  | [Worm_DNA_v0_tokenized_kmer6_stride1](https://huggingface.co/datasets/simecek/Worm_DNA_v0_tokenized_kmer6_stride1)  | [DNADebertaK6_Worm](https://huggingface.co/simecek/DNADebertaK6_Worm)  |
+| Arabidopsis thaliana  | [Arabidopsis_thaliana_DNA_v0_tokenized_kmer6_stride1](https://huggingface.co/datasets/simecek/Arabidopsis_thaliana_DNA_v0_tokenized_kmer6_stride1)  | [DNADebertaK6_Arabidopsis](https://huggingface.co/simecek/DNADebertaK6_Arabidopsis)  |
+
+
+All models in active use are based on KMER (k=6) [DNA_bert_6](https://huggingface.co/armheb/DNA_bert_6) tokenizer with the stride 1.
 
 ## Experiments & plans
 
